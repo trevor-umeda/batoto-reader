@@ -1,8 +1,5 @@
-store-chrome-extension
-======================
 
-Making a chrome extension for easier use of common store-api tasks
+batoto-reader
+=============
 
-###Common Tasks###
-* Go to store-admin tool for a region
-* rest calls
+chrome extension to help with batoto. 
