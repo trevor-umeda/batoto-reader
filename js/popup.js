@@ -30,7 +30,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(function(detail){
         }
         urlMap[mangaTitle] = tabs[0].url 
 
-        chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+        chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
           // Notify that we saved.      
         });  
       }
@@ -39,7 +39,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(function(detail){
 });
 
 
-  chrome.storage.local.get("mangaBookmark",function(storage){
+  chrome.storage.sync.get("mangaBookmark",function(storage){
     urlMap = storage.mangaBookmark
     console.log(urlMap)
     if(!urlMap){
@@ -72,7 +72,7 @@ $("#links").on('click',".url",function() {
       }
       urlMap[mangaTitle] = tabs[0].url 
 
-      chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+      chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
         // Notify that we saved.      
       });
     });  

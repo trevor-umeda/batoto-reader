@@ -6,7 +6,7 @@ chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
 	console.log(tabs[0].url)
       if(tabs[0].url.indexOf("batoto") > 0 ){
         var urlMap
-        chrome.storage.local.get("mangaBookmark",function(storage){
+        chrome.storage.sync.get("mangaBookmark",function(storage){
           console.log(storage)
              urlMap = storage.mangaBookmark          
               if(!urlMap){
@@ -19,7 +19,7 @@ chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
               if(mangaTitle.indexOf("www.batoto") < 0){
                 urlMap[mangaTitle] = tabs[0].url 
               
-                chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+                chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
                  // Notify that we saved.      
                 });    
               }
