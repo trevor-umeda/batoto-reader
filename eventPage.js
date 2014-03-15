@@ -14,7 +14,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
       var urlMap
       //Get the bookmarks from storage
       //
-      chrome.storage.local.get("mangaBookmark",function(storage){
+      chrome.storage.sync.get("mangaBookmark",function(storage){
         console.log(storage)
         urlMap = storage.mangaBookmark
         //If it doesn't exist, create an empty one
@@ -35,8 +35,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
           console.log(urlMap[mangaTitle])
           //Save our bookmarks
           //
-          chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
-            chrome.storage.local.get("mangaBookmark",function(storage){
+          chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
+            chrome.storage.sync.get("mangaBookmark",function(storage){
               console.log("post save")
               console.log(storage)
             });                  

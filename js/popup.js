@@ -33,7 +33,7 @@ $(function(){
             }
             urlMap[mangaTitle] = tabs[0].url 
 
-            chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+            chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
               // Notify that we saved.      
             });  
           }
@@ -41,16 +41,24 @@ $(function(){
       });
   });
 
-  //SYNC STUFF dont' work atm
-  chrome.storage.sync.get("mangaSync",function(storage){
-    urlMap = storage.mangaSync
-    console.log("sync storage")
-    console.log(urlMap)
-  })
+  // //SYNC STUFF dont' work atm
+  // chrome.storage.sync.get("mangaSync",function(storage){
+  //   urlMap = storage.mangaSync
+  //   console.log("Got the sync storage")
+  //   console.log(urlMap)
+  //   if(!urlMap){
+  //     urlMap = {};
+  //   }
+  //   for (var key in urlMap) {
+  //     if (urlMap.hasOwnProperty(key)) {              
+  //       $("#sync_table tbody").append("<tr><td><a href='#' class='url' id='"+urlMap[key]+"'>"+ key + "</a></td><td>X</td></tr>")
+  //     }
+  //   }
+  // })
 
   //When the page is loaded, get all the bookmarks
   //
-  chrome.storage.local.get("mangaBookmark",function(storage){
+  chrome.storage.sync.get("mangaBookmark",function(storage){
     //Retrieve the bookmark object from storage.
     //
     urlMap = storage.mangaBookmark
@@ -66,38 +74,27 @@ $(function(){
     //
     for (var key in urlMap) {
       if (urlMap.hasOwnProperty(key)) {         
-        $("#local_table tbody").append("<tr><td><a href='#' class='url' id='"+urlMap[key]+"'>"+ key + "</a></td><td><div class='delete' id='"+key+"''>X</div></td></tr>")          
+        $("#sync_table tbody").append("<tr><td><a href='#' class='url' id='"+urlMap[key]+"'>"+ key + "</a></td><td><div class='delete' id='"+key+"''>X</div></td></tr>")          
       }
     }
 
-    //If the extension is opened on a page, then save it with sync ( doesn't work )
+  //   //If the extension is opened on a page, then save it with sync ( doesn't work )
 
-    chrome.storage.sync.set({"mangaSync":urlMap},function(storage){
-      console.log("saving")
-      console.log(urlMap)
-      chrome.storage.sync.get("mangaSync",function(storage){
-        urlMap = storage.mangaSync
-        console.log("Got the sync storage")
-        console.log(urlMap)
-        if(!urlMap){
-          urlMap = {};
-        }
-        for (var key in urlMap) {
-          if (urlMap.hasOwnProperty(key)) {              
-            $("#sync_table tbody").append("<tr><td><a href='#' class='url' id='"+urlMap[key]+"'>"+ key + "</a></td><td>X</td></tr>")
-          }
-        }
-      })
-    })
+    // chrome.storage.sync.set({"mangaSync":urlMap},function(storage){
+    //   console.log("saving")
+    //   console.log(urlMap)
+    //   chrome.storage.sync.get("mangaSync",function(storage){        
+    //   })
+    // })
   })
   
-  $("#local_table").on('click','.delete',function(){
+  $("#sync_table").on('click','.delete',function(){
     var key = $(this).attr('id');
     console.log(urlMap)
     console.log(key)
     delete urlMap[key]
     console.log(urlMap)
-    chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+    chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
       // Notify that we saved.      
     });
   })
@@ -124,7 +121,7 @@ $(function(){
       }
       urlMap[mangaTitle] = tabs[0].url 
 
-      chrome.storage.local.set({'mangaBookmark': urlMap}, function() {
+      chrome.storage.sync.set({'mangaBookmark': urlMap}, function() {
         // Notify that we saved.      
       });
     });  
